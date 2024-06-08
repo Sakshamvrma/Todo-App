@@ -1,8 +1,10 @@
 const {createTodo,updateTodo}=require('./types')
 const express=require('express')
 const {todo}=require('./db')
+const cors=require('cors')
 const app=express()
 const PORT=3000;
+app.use(cors());
 
 app.use(express.json())//All the postr end points works and will be able to parse the json body
 app.post('/todo',async(req,res)=>{
