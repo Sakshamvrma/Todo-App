@@ -1,24 +1,33 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useState } from 'react'
 import { CreateTodo } from './components/CreateTodo'
 import { RenderTodo } from './components/RenderTodo'
-import './App.css'
+
 
 function App() {
   const [todos, setTodos] = useState([])
-  fetch("http://localhost:3000/todos").then(
+  
+  useEffect(()=>{
+    setInterval(()=>{
+      fetch("http://localhost:3000/todos").then(
     async(res)=>{
       const resp=await res.json();
-      setTodos(resp.todos)
+      console.log(resp)
+      setTodos(resp.data)
     }
   )
 
+    },5000)
+    
+
+  },[])
+  
+
   return (
     <>
-     <CreateTodo/>
-     <RenderTodo todos={todos} setTodos={setTodos} />
-     
+    <>{todos.length} todos</>
+      { todos && todos.map((todo)=>(
+        <RenderTodo  key={todo._id} todo={todo}  />
+     ))}
     </>
   )
 }
