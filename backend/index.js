@@ -75,6 +75,20 @@ app.put('/completed',async(req,res)=>{
   
 
 })
+app.get('todo/:id',async(req,res)=>{
+  const todoitem=await todo.findById(req.params.id);
+  if(!todoitem){
+    res.status(404).json({
+      msg:"Todo not found"
+    })
+    return;
+  }
+  res.status(200).json({
+    status:"success",
+    data:todoitem
+  })
+
+})
 app.listen(PORT,()=>{
   console.log(`Server is running on port ${3000}`)
 })
